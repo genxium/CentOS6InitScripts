@@ -1,0 +1,3 @@
+REFERENCE https://www.centos.org/docs/5/html/5.1/Deployment_Guide/s1-iptables-saving.html
+
+Rules created with the iptables command are stored in memory. If the system is restarted before saving the iptables rule set, all rules are lost.

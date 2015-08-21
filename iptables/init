@@ -1,0 +1,7 @@
+#!/bin/bash
+
+basedir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+sudo su - root -c "cat $basedir/iptables_template > /etc/sysconfig/iptables"
+
+sudo su - root -c "service iptables restart"

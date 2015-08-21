@@ -1,0 +1,21 @@
+#!/bin/bash
+
+basedir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+sudo su - root -c "rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm"
+sudo su - root -c "yum -y install easy-rsa"
+sudo su - root -c "yum -y install lzo-devel"
+sudo su - root -c "yum -y install openssl-devel"
+sudo su - root -c "yum -y install openvpn"
+
+sudo su - root -c "cat $basedir/server_template.conf > /etc/openvpn/server.conf"
+
+sudo su - root -c "mkdir -p /etc/openvpn/easy-rsa/keys"
+
+sudo su - root -c "cp -rf $basedir/easy-rsa/2.0/* /etc/openvpn/easy-rsa"
+
+easyrsabasedir=/etc/openvpn/easy-rsa
+keysbasedir=$easyrsabasedir/keys
+sudo su - root -c "touch $keysbasedir/index.txt"
+sudo su - root -c "echo 00 > $keysbasedir/serial"
+

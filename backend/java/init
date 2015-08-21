@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# install & upgrade nss, reference http://blog.backslasher.net/java-ssl-crash.html 
+sudo su - root -c "yum -y install nss"
+sudo su - root -c "yum -y upgrade nss"
+
+# install openjdk 
+sudo su - root -c "yum -y install java-1.8.0-openjdk-devel"
+
+# config default java version, reference https://wiki.centos.org/HowTos/JavaRuntimeEnvironment
+sudo su - root -c "alternatives --config java"
+sudo su - root -c "alternatives --config javac"

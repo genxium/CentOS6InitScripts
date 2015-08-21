@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# for reference only
+basedir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+sudo su - root -c "$basedir/../iptables/unmasquerade_single_address 10.8.0.0 24"

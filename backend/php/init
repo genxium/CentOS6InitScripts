@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# install gcc
+sudo su - root -c "yum -y install gcc"
+
+# install php, php-pear and php-fpm
+sudo su - root -c "rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm"
+sudo su - root -c "rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm"
+sudo su - root -c "yum --enablerepo=remi,remi-php55 -y install php php-pear php-devel php-fpm php-pdo php-soap php-mbstring"
+
+# install composer
+sudo su - root -c "curl -sS https://getcomposer.org/installer | php"
+sudo su - root -c "mv composer.phar /usr/local/bin/composer"

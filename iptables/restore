@@ -1,0 +1,9 @@
+#!/bin/bash
+
+basedir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+# backup file to /etc/sysconfig/iptables
+sudo su - root -c "cat $basedir/iptables.bak > /etc/sysconfig/iptables"
+
+# /etc/sysconfig/iptables to memory (running)
+sudo su - root -c "service iptables restart"

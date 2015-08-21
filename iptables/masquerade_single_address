@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ $# -ne 2 ]; then 
+	echo "Usage: $0 <ip> <number of mask bits>"
+	exit 1
+fi
+
+basedir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+ip=$1
+nmaskbits=$2
+
+sudo su - root -c "iptables -t nat -A POSTROUTING -s $ip/$nmaskbits -o eth0 -j MASQUERADE"
+
+sudo su - root -c "$basedir/backup"

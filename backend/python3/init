@@ -1,0 +1,31 @@
+#!/bin/bash
+
+sudo su - root -c "yum -y install https://dl.iuscommunity.org/pub/ius/stable/CentOS/6/x86_64/ius-release-1.0-14.ius.centos6.noarch.rpm"
+
+pyname=python34u
+pipname=pip3
+
+sudo su - root -c "yum -y install $pyname"
+sudo su - root -c "$pipname install --upgrade pip"
+
+sudo su - root -c "yum -y install $pyname-devel"
+
+sudo su - root -c "$pipname install SQLALchemy"
+sudo su - root -c "$pipname install --upgrade SQLALchemy"
+
+sudo su - root -c "$pipname install tornado"
+sudo su - root -c "$pipname install --upgrade tornado"
+
+sudo su - root -c "yum -y install libffi"
+sudo su - root -c "yum -y install libffi-devel"
+
+sudo su - root -c "$pipname install pycrypto"
+sudo su - root -c "$pipname install --upgrade pycrypto"
+
+sudo su - root -c "$pipname install pyOpenSSL"
+sudo su - root -c "$pipname install --upgrade pyOpenSSL"
+
+sudo su - root -c "yum -y install postgresql-devel"
+
+sudo su - root -c "$pipname install psycopg2"
+sudo su - root -c "$pipname install --upgrade psycopg2"

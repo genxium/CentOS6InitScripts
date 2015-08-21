@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Make a certificate/private key pair using a locally generated
+# root certificate.
+
+# export EASY_RSA="${EASY_RSA:-.}"
+export EASY_RSA=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+"$EASY_RSA/pkitool" --interact $*

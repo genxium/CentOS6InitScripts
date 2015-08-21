@@ -1,0 +1,22 @@
+#!/bin/bash
+
+basedir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+# install mail utility `postfix`
+sudo su - root -c "yum -y install yum-priorities"
+
+# install up-to-date `postfix` 
+sudo su - root -c "yum -y install postfix"
+
+# init `postfix` configuration
+sudo su - root -c "cat $basedir/postfix_main_template.conf > /etc/postfix/main.cf" 
+
+# install libplain.so & liblogin.so, reference http://www.postfix.org/SASL_README.html#client_sasl_policy
+sudo su - root -c "yum -y install cyrus-sasl-plain"
+
+# install SMTPS utility `stunnel`
+sudo su - root -c "yum -y install stunnel"
+
+# init `stunnel` configuration
+sudo su - root -c "cat $basedir/stunnel_template.conf > /etc/stunnel/stunnel.conf" 
+

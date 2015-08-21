@@ -1,0 +1,28 @@
+#!/bin/bash
+
+basedir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+# install mysql-server by yum repo, reference: http://dev.mysql.com/downloads/repo/yum/
+sudo su - root -c "rpm -Uvh http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm"
+sudo su - root -c "yum -y install mysql-server"
+
+sudo su - root -c "mysql_install_db --user=mysql --ldata=/var/lib/mysql"
+sudo su - root -c "cat $basedir/mysqld_template.conf > /etc/my.cnf"
+
+sudo su - root -c "$basedir/start"
+
+# wait for mysqld starting up
+sudo su - root -c "sleep 5"
+
+# remove root password
+mysqladmin -uroot -proot password ''
+
+# remote access is disabled by default
+mysql -uroot -e "CREATE USER 'cu'@'localhost'"
+mysql -uroot -e "CREATE USER 'rep'@'localhost'"
+
+dbname='test'
+mysql -uroot -e "CREATE DATABASE IF NOT EXISTS $dbname"
+
+sudo su - root -c "$basedir/grant_read_write $dbname cu localhost"
+sudo su - root -c "$basedir/grant_read_only $dbname rep localhost"

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then 
+	echo "Usage: $0 <IP or FQDN>"
+	exit 1
+fi
+addr=$1
+
+# memory (running) 
+sudo su - root -c "iptables -t filter -D INPUT -s $addr -j DROP"
+
+# memory to /etc/sysconfig/iptables
+sudo su - root -c "service iptables save"
