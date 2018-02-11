@@ -9,7 +9,9 @@ basedir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 ip=$1
 nmaskbits=$2
+inIface=eth0
+outIface=eth0
 
-sudo su - root -c "iptables -t nat -D POSTROUTING -s $ip/$nmaskbits -o eth0 -j MASQUERADE"
+sudo su - root -c "iptables -t nat -D POSTROUTING -s $ip/$nmaskbits --in-interface $inIface --out-interface $outIface -j MASQUERADE"
 
 sudo su - root -c "$basedir/backup"
