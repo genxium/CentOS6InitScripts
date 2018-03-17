@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo su - root -c "iptables -L -v -n -t filter"

@@ -1,0 +1,29 @@
+#!/bin/bash
+
+if [ $# -ne 2 ]; then 
+	echo "Usage: $0 <an iface, e.g. 'eth0'> <port, e.g. '8888', or ports delimited by comma, e.g. '8888,8889,8890'>"
+	exit 1
+fi
+iface=$1
+ports=$2
+
+# memory (running) 
+# The "transport layer protocol" of "IP Suite(RFC1122, https://tools.ietf.org/html/rfc1122)" must be specified by the "--protocol" or "-p" parameter so as to specify port constraints.  
+# See `man iptables-extensions` for more information of syntax.
+protocols=( 'tcp' 'udp' )
+for proto in $protocols
+do
+    sudo su - root -c "iptables -t filter -A INPUT --in-interface $iface --protocol $proto --match multiport --dports $ports -j DROP"
+    sudo su - root -c "iptables -t filter -A OUTPUT --out-interface $iface --protocol $proto --match multiport --sports $ports -j DROP"
+    # To operate on single dport.
+    # sudo su - root -c "iptables -t filter -A INPUT --in-interface $iface --protocol $proto --dport $singlePort -j DROP" 
+    # To operate on single sport.
+    # sudo su - root -c "iptables -t filter -A OUTPUT --out-interface $iface --protocol $proto --sport $singlePort -j DROP"
+done
+
+# memory to /etc/sysconfig/iptables
+sudo su - root -c "service iptables save"
+
+basedir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+printf "\nPlease check your effective filters of ports by\n\n\t$basedir/list_filter_chains_verbose_numeric_addrs_and_ports\n\n"
